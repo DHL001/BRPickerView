@@ -48,9 +48,10 @@ BRSYNTH_DUMMY_CLASS(NSBundle_BRPickerView)
     return [self br_localizedStringForKey:key value:nil language:language];
 }
 
+
 + (NSString *)br_localizedStringForKey:(NSString *)key value:(NSString *)value language:(NSString *)language {
     static NSBundle *bundle = nil;
-    if (bundle == nil) {
+//    if (bundle == nil) {
         // 如果没有手动设置语言，将随系统的语言自动改变
         if (!language) {
             // 系统首选语言
@@ -71,10 +72,12 @@ BRSYNTH_DUMMY_CLASS(NSBundle_BRPickerView)
         
         // 从 BRPickerView.bundle 中查找资源
         bundle = [NSBundle bundleWithPath:[[self br_pickerBundle] pathForResource:language ofType:@"lproj"]];
-    }
+//    }
     value = [bundle localizedStringForKey:key value:value table:nil];
     
-    return [[NSBundle mainBundle] localizedStringForKey:key value:value table:nil];
+//    NSString *string = [[NSBundle mainBundle] localizedStringForKey:key value:value table:nil];
+    return value;
 }
+
 
 @end

@@ -258,7 +258,29 @@
         // 跟随系统的首选语言自动改变
         // zh-Hans-CN(简体中文)、zh-Hant-CN(繁体中文)、en-CN(美式英语)、en-GB(英式英语)
         // 其中`CN`是iOS9以后新增的地区代码，如：CN 代表中国，US 代表美国
-        _language = [NSLocale preferredLanguages].firstObject;
+//        _language = [NSLocale preferredLanguages].firstObject;
+        
+        NSString *appLanguage = @"en-CN";
+        NSInteger language = [[[NSUserDefaults standardUserDefaults] objectForKey:@"kLanguageKey"] intValue];
+        //[[kUserDefault objectForKey:kLanguageKey] intValue];
+        if (1 == language) {
+            appLanguage = @"en-CN";
+        } else if (2 == language) {
+            appLanguage = @"zh-Hans-CN";
+        } else {
+            //获取系统语言
+            NSArray *languages = [NSLocale preferredLanguages];
+            NSString *systemlanguage = [languages objectAtIndex:0];
+            if ([systemlanguage containsString:@"en"]) {
+                appLanguage = @"en-CN";
+            } else if ([systemlanguage containsString:@"zh-Hans"]) {
+                appLanguage = @"zh-Hans-CN";
+            } else {
+                appLanguage = @"en-CN";
+            }
+        }
+        
+        _language = appLanguage;
     }
     return _language;
 }
